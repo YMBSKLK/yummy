@@ -2,7 +2,7 @@ package cn.maybe.server;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 import java.util.Arrays;
@@ -13,8 +13,8 @@ import java.util.Arrays;
  * @author sun_hming
  * @date 2024/04/04 09:21
  */
-@SpringBootConfiguration
-@ComponentScan("cn.maybe.server")
+@SpringBootApplication
+@ComponentScan({"cn.maybe.server", "cn.maybe.rbac"})
 @MapperScan("cn.maybe.**.mapper")
 public class YummyApplication {
 

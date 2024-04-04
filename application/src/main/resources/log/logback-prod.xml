@@ -53,91 +53,12 @@
         </filter>
     </appender>
 
-    <if condition='property("ELK_MODE").toUpperCase().contains("TRUE")'>
-        <then>
-            <!-- 推送日志至elk -->
-            <appender name="INFO_LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-                <destination>${DESTINATION}</destination>
-                <!-- 日志输出编码 -->
-                <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-                    <providers>
-                        <timestamp>
-                            <timeZone>UTC</timeZone>
-                        </timestamp>
-                        <pattern>
-                            <pattern>
-                                {
-                                "traceId": "%X{traceId}",
-                                "requestId": "%X{requestId}",
-                                "accountId": "%X{accountId}",
-                                "tenantId": "%X{tenantId}",
-                                "logLevel": "%level",
-                                "serviceName": "${springAppName:-SpringApp}",
-                                "pid": "${PID:-}",
-                                "thread": "%thread",
-                                "class": "%logger{40}",
-                                "line":"%L",
-                                "message": "%message"
-                                }
-                            </pattern>
-                        </pattern>
-                        <mdc/>
-                        <stackTrace/>
-                    </providers>
-                </encoder>
-                <!-- 打印日志级别 -->
-                <filter class="ch.qos.logback.classic.filter.LevelFilter">
-                    <level>INFO</level>
-                    <onMatch>ACCEPT</onMatch>
-                    <onMismatch>DENY</onMismatch>
-                </filter>
-            </appender>
-
-            <!-- 推送日志至elk -->
-            <appender name="ERROR_LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-                <destination>${DESTINATION}</destination>
-                <!-- 日志输出编码 -->
-                <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-                    <providers>
-                        <timestamp>
-                            <timeZone>UTC</timeZone>
-                        </timestamp>
-                        <pattern>
-                            <pattern>
-                                {
-                                "traceId": "%X{traceId}",
-                                "requestId": "%X{requestId}",
-                                "accountId": "%X{accountId}",
-                                "tenantId": "%X{tenantId}",
-                                "logLevel": "%level",
-                                "serviceName": "${springAppName:-SpringApp}",
-                                "pid": "${PID:-}",
-                                "thread": "%thread",
-                                "class": "%logger{40}",
-                                "line":"%L",
-                                "message": "%message"
-                                }
-                            </pattern>
-                        </pattern>
-                        <mdc/>
-                        <stackTrace/>
-                    </providers>
-                </encoder>
-                <!-- 打印日志级别 -->
-                <filter class="ch.qos.logback.classic.filter.LevelFilter">
-                    <level>ERROR</level>
-                    <onMatch>ACCEPT</onMatch>
-                    <onMismatch>DENY</onMismatch>
-                </filter>
-            </appender>
-        </then>
-    </if>
 
     <!-- 日志输出级别 -->
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="${INFO_APPENDER}"/>
-        <appender-ref ref="${ERROR_APPENDER}"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="ERROR"/>
     </root>
 
     <logger name="net.sf.ehcache" level="INFO"/>
