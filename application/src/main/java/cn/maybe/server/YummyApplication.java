@@ -1,5 +1,6 @@
 package cn.maybe.server;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,6 +15,7 @@ import java.util.Arrays;
  */
 @SpringBootConfiguration
 @ComponentScan("cn.maybe.server")
+@MapperScan("cn.maybe.**.mapper")
 public class YummyApplication {
 
     private static final String SPRING_CONFIG_NAME_KEY = "--spring.config.name";
